@@ -1,6 +1,7 @@
 import argparse
 import json
 import os
+import re
 import sys
 from urllib.parse import urlparse
 
@@ -28,12 +29,19 @@ SYSTEM_PROMPT = (
 )
 
 
+_SAFE = re.compile(r"^[A-Za-z0-9_.-]+$")
+
+
 def parse_repo_url(url: str) -> tuple[str, str]:
     parts = urlparse(url).path.strip("/").split("/")
     if len(parts) < 2:
         print("URL inválida. Usa: https://github.com/owner/repo")
         sys.exit(1)
-    return parts[0], parts[1].removesuffix(".git")
+    owner, repo = parts[0], parts[1].removesuffix(".git")
+    if not _SAFE.match(owner) or not _SAFE.match(repo):
+        print("URL inválida: owner o repo contienen caracteres no permitidos.")
+        sys.exit(1)
+    return owner, repo
 
 
 def tool_label(name: str, args: dict) -> str:
