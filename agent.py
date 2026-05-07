@@ -18,10 +18,10 @@ if not os.getenv("GROQ_API_KEY"):
 
 SYSTEM_PROMPT = (
     "Eres un asistente experto en análisis de código.\n"
-    "Tienes acceso a las tools para leer el repositorio.\n"
-    "SIEMPRE usa las tools para responder — nunca inventes contenido de archivos.\n"
+    "OBLIGATORIO: llama al menos una tool antes de responder cualquier pregunta.\n"
+    "Nunca respondas basándote en suposiciones — siempre lee el repositorio primero.\n"
     "Responde de forma concisa y técnica.\n"
-    "Si algo no está en el repositorio, dilo claramente."
+    "Si algo no está en el repositorio, dilo después de haberlo buscado."
 )
 
 
@@ -58,7 +58,7 @@ def run_agent(
 
     for _ in range(MAX_TOOL_ROUNDS):
         response = client.chat.completions.create(
-            model="meta-llama/llama-4-scout-17b-16e-instruct",
+            model="qwen/qwen3-32b",
             messages=messages,
             tools=TOOLS_SCHEMA,
             tool_choice="auto",
