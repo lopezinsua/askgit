@@ -5,7 +5,7 @@ import sys
 from urllib.parse import urlparse
 
 from dotenv import load_dotenv
-from groq import Groq
+from groq import Groq, RateLimitError
 
 from src.github import GitHubClient
 from src.tools import TOOLS_SCHEMA, dispatch
@@ -115,6 +115,8 @@ def main():
             try:
                 answer = run_agent(question, messages, groq_client, github, file_cache)
                 print(answer)
+            except RateLimitError:
+                print("Límite de tasa alcanzado. Espera unos segundos e intenta de nuevo.")
             except Exception as e:
                 print(f"Error: {e}")
     finally:
