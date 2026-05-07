@@ -4,6 +4,9 @@ import os
 import sys
 from urllib.parse import urlparse
 
+sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
 from dotenv import load_dotenv
 from groq import Groq, RateLimitError
 
