@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "askgit"
+version = "1.0.0"
+description = "CLI agent that answers natural language questions about any public GitHub repo"
+requires-python = ">=3.11"
+dependencies = [
+    "groq>=1.2.0",
+    "httpx>=0.28.0",
+    "python-dotenv>=1.0.1",
+]
+
+[project.scripts]
+askgit = "agent:main"
+
+[tool.ruff]
+line-length = 100

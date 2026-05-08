@@ -1,4 +1,6 @@
 import base64
+import os
+
 import httpx
 
 BASE_URL = "https://api.github.com"
@@ -8,14 +10,14 @@ class GitHubClient:
     def __init__(self, owner: str, repo: str):
         self.owner = owner
         self.repo = repo
-        self._http = httpx.Client(
-            base_url=BASE_URL,
-            headers={
-                "Accept": "application/vnd.github+json",
-                "X-GitHub-Api-Version": "2022-11-28",
-            },
-            timeout=15.0,
-        )
+        headers = {
+            "Accept": "application/vnd.github+json",
+            "X-GitHub-Api-Version": "2022-11-28",
+        }
+        token = os.getenv("GITHUB_TOKEN")
+        if token:
+            headers["Authorization"] = f"token {token}"
+        self._http = httpx.Client(base_url=BASE_URL, headers=headers, timeout=15.0)
 
     def get_contents(self, path: str = "") -> dict | list:
         r = self._http.get(f"/repos/{self.owner}/{self.repo}/contents/{path}")
