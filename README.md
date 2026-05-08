@@ -39,12 +39,12 @@ Conectado a lopezinsua/rag-cli. Escribe tus preguntas (exit para salir).
 > ¿Qué hace el archivo indexer.py?
 [Leyendo src/indexer.py...]
 indexer.py carga un PDF con pypdf, lo divide en chunks de 500 tokens con
-solapamiento de 50, genera embeddings con OpenAI y los almacena en un índice FAISS.
+solapamiento de 50, genera embeddings con sentence-transformers (local, sin API) y los almacena en un índice FAISS.
 
 > ¿Qué dependencias tiene el proyecto?
 [Leyendo requirements.txt...]
-Las dependencias principales son: langchain==0.1.0, faiss-cpu==1.7.4,
-pypdf==3.17.4, openai==1.10.0.
+Las dependencias principales son: langchain-community, faiss-cpu, pypdf,
+sentence-transformers.
 
 > ¿Hay alguna función que maneje errores de red?
 [Buscando 'error de red'...]
