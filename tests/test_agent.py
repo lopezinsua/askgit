@@ -1,7 +1,5 @@
 """Tests for askgit agent utilities."""
 import pytest
-from unittest.mock import MagicMock
-
 from agent import parse_repo_url, tool_label
 
 
