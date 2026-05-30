@@ -5,14 +5,14 @@ import re
 import sys
 from urllib.parse import urlparse
 
-sys.stdout.reconfigure(encoding="utf-8", errors="replace")
-sys.stderr.reconfigure(encoding="utf-8", errors="replace")
-
 from dotenv import load_dotenv
 from groq import Groq, RateLimitError
 
 from src.github import GitHubClient
 from src.tools import TOOLS_SCHEMA, dispatch
+
+sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 load_dotenv()
 
@@ -38,7 +38,7 @@ def parse_repo_url(url: str) -> tuple[str, str]:
         print("URL inválida. Usa: https://github.com/owner/repo")
         sys.exit(1)
     owner, repo = parts[0], parts[1].removesuffix(".git")
-    if not _SAFE.match(owner) or not _SAFE.match(repo):
+    if not _SAFE.match(owner) or not _SAFE.match(repo) or ".." in owner or ".." in repo:
         print("URL inválida: owner o repo contienen caracteres no permitidos.")
         sys.exit(1)
     return owner, repo
