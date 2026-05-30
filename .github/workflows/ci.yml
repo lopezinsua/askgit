@@ -26,4 +26,4 @@ jobs:
           python-version: "3.12"
           cache: pip
       - run: pip install -r requirements.txt pytest
-      - run: pytest tests/ -v
+      env:\n        GROQ_API_KEY: dummy_key_for_ci\n      - run: pytest tests/ -v
